@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            td{
+                width:100px;
+                height:100px;
+                font-size:5em
+            }
+        </style> 
+        <script>
+            var marks = ["○","×"];
+            var index = [0,0,0,0,0,0,0,0,0,0]
+            function change(point){
+                var i = index[point]
+                document.getElementById("masu" + point).textContent = marks[i];
+                if(++index[point]>=marks.length){
+                    index[point] = 0;
+                }
+            }
+            </script>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td id="masu1" onclick="change(1)"></td>
+                <td id="masu2" onclick="change(2)"></td>
+                <td id="masu3" onclick="change(3)"></td>
+            </tr>
+            <tr>
+                <td id="masu4" onclick="change(4)"></td>
+                <td id="masu5" onclick="change(5)"></td>
+                <td id="masu6" onclick="change(6)"></td>
+            </tr>
+            <tr>
+                <td id="masu7" onclick="change(7)"></td>
+                <td id="masu8" onclick="change(8)"></td>
+                <td id="masu9" onclick="change(9)"></td>
+            </tr>
+        </table>
+    </body>
+</html>
