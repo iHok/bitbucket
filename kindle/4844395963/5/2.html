@@ -1,14 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>SnakeBite</title>
+        <title>Cave</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charset="UTF-8">
+        <style>
+        #main {
+            width:800px;
+            height:600px;
+            background-color: #00cc00;
+            position: absolute;
+            overflow: hidden;
+        }
+        #ship{
+            top:250px;
+            left:0px;
+            width:150px;
+            height: 97px;
+            position: absolute;
+            z-index: 100;
+        }
+        #bang{
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            z-index: 101;
+            visibility: hidden;
+        }
+        </style>
         <script>
         </script>
     </head>
     <body onload="init()">
-        <canvas id="field" width="400" height="400" style="background:#cccccc;">
-        </canvas>
+        <h1>Score:<span id="score"></span></h1>
+        <div id="main">
+            <img id="ship" src="ship.png" style="height:97px;"/>
+            <img id="bang" src="bang.png"/>
     </body>
 </html>
