@@ -1,0 +1,8 @@
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "name": "ytyaru",
+  "url": "https://github.com/ytyaru",
+  "sameAs": ["http://ytyaru.hatenablog.com/about"]
+}
+
