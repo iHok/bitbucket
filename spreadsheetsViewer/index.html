@@ -7,10 +7,11 @@
     <h3>スプレッドシートのURL</h3>
     <form name="form1">
       <input type="text" id="spreadsheetsURL" value="https://docs.google.com/spreadsheets/d/1Q-QfuJ78cLz_S3ueNf77diFP45LzCneGl0XUcuzuW5M/edit">
+      <input type="button" value=" 読込 " onclick="readSpreadsheets();" />
       <select id="sel1" name="sel1"></select>
-      <input type="button" value=" ボタン " onclick="createTable();" />
+      <input type="button" value=" 選択 " onclick="createTable();" />
     </form>
-    <table id="table" class="table">test</ul>
+    <table id="table" class="table">ここにスプレッドシートの中身を表示</ul>
     </body>
 <script src="js/spreadsheetsScript.js"></script>
 </html>

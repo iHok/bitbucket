@@ -6,6 +6,8 @@ let spreadsheetsURLsplit = document.querySelector("#spreadsheetsURL").value.spli
 var url = "https://spreadsheets.google.com/feeds/worksheets/"+ spreadsheetsURLsplit[5] +"/public/basic?alt=json";
 console.log(url)
 
+function readSpreadsheets(){
+  document.getElementById("sel1").innerHTML = '';
 fetch(url)
     .then((response) => response.json())
     .then((json) => {
@@ -29,7 +31,7 @@ fetch(url)
 
         return false;
     });
-
+  }
 
     function createTable(){
       const sel1 = document.form1.sel1;
@@ -41,6 +43,7 @@ fetch(url)
       const str = "https://spreadsheets.google.com/feeds/list/"+ spreadsheetsURLsplit[5]+"/"+sel1.options[num].value+"/public/values?alt=json";
       console.log(str);
       const result = document.getElementById("result");
+      document.getElementById("table").innerHTML = '';
 
       fetch(str)
       .then((response) => response.json())
@@ -73,3 +76,7 @@ fetch(url)
 
     };
 */
+
+window.onload = function(){
+  readSpreadsheets();
+}
