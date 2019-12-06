@@ -1,13 +1,11 @@
-
-let spreadsheetsURLsplit = document.querySelector("#spreadsheetsURL").value.split("/");
-//console.log(spreadsheetsURL.value);
-//console.log(spreadsheetsURL.value.split("/"));
-//console.log(document.getElementsByTagName('head')[0])
-var url = "https://spreadsheets.google.com/feeds/worksheets/"+ spreadsheetsURLsplit[5] +"/public/basic?alt=json";
-console.log(url)
-
 function readSpreadsheets(){
-  document.getElementById("sel1").innerHTML = '';
+  let spreadsheetsURLsplit = document.querySelector("#spreadsheetsURL").value.split("/");
+  //console.log(spreadsheetsURL.value);
+  //console.log(spreadsheetsURL.value.split("/"));
+  //console.log(document.getElementsByTagName('head')[0])
+  var url = "https://spreadsheets.google.com/feeds/worksheets/"+ spreadsheetsURLsplit[5] +"/public/basic?alt=json";
+  console.log(url)
+    document.getElementById("sel1").innerHTML = '';
 fetch(url)
     .then((response) => response.json())
     .then((json) => {
