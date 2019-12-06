@@ -36,6 +36,7 @@ fetch(url)
 
       // 値(数値)を取得
       const num = sel1.selectedIndex;
+      let spreadsheetsURLsplit = document.querySelector("#spreadsheetsURL").value.split("/");
     
       // 値(数値)から値(value値)を取得
       const str = "https://spreadsheets.google.com/feeds/list/"+ spreadsheetsURLsplit[5]+"/"+sel1.options[num].value+"/public/values?alt=json";
