@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
 <body>
-    <h3>スプレッドシートのURLを入力して読込→シートを選択で表示</h3>
-    <form name="form1">
-      <input type="text" id="spreadsheetsURL" value="https://docs.google.com/spreadsheets/d/1Q-QfuJ78cLz_S3ueNf77diFP45LzCneGl0XUcuzuW5M/edit">
-      <input type="button" value=" 読込 " onclick="readSpreadsheets();" />
-      <select id="sel1" name="sel1"></select>
-      <input type="button" value=" 選択 " onclick="createTable();" />
-    </form>
-    <table id="table" class="table">ここにスプレッドシートの中身を表示</ul>
-    </body>
+  <h3>スプレッドシートのURLを入力して読込→シートを選択で表示</h3>
+  <form name="form1">
+    <input type="text" id="spreadsheetsURL"
+      value="https://docs.google.com/spreadsheets/d/1Q-QfuJ78cLz_S3ueNf77diFP45LzCneGl0XUcuzuW5M/edit" oninput="changeSelectLists(this.value)">
+    <select id="sel1" name="sel1" onchange="createTable(this.value)"></select>
+  </form>
+  <table id="table" class="table">ここにスプレッドシートの中身を表示</ul>
+</body>
 <script src="js/spreadsheetsScript.js"></script>
+
 </html>
