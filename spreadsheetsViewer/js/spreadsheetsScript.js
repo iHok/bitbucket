@@ -34,19 +34,35 @@ const createTable = (sheetValue) => {
   fetch(str)
     .then((response) => response.json())
     .then((json) => {
-      //      console.log(json);
+      //      console.log(Object.keys(json.feed.entry[1].filter(gsx => gsx.test(/gsx/))));
+      //      console.log(Object.keys(json.feed.entry[0]).filter(gsx => /gsx\$/.test(gsx)));
+      console.log(json["feed"]["entry"]);
+      //.filter(gsx => /gsx\$/.test(gsx))
       //        result.innerHTML = json.feed;        
-      // console.log(myJson.length);                                               
-      for (var i = 0; i < json.feed.entry.length; i++) {
-        console.log(json.feed.entry[i]);
+      // console.log(myJson.length);
 
+      let lineKeys = Object.keys(json.feed.entry[0]).filter(gsx => /gsx\$/.test(gsx));
+      let tableData =  (new Array(json.feed.entry[0].length)).fill("").map(() => (new Array(lineKeys.length)).fill(""));;
+      console.log(tableData);
+      for (v of lineKeys) {
+        tableData.push(v[0].replace(/gsx\$/g, ""))
+        //        console.log(json.feed.entry.[v].content.$t)
+      };
+      for (let i = 0; i < json.feed.entry.length; i++) {
+        //        table.push();
+        //        console.log(json.feed.entry[i]);
+        for (v of lineKeys) {
+//          tableData[i + 1].push("test");        
+        };
+  
         let tr = document.createElement("tr");
         let td = document.createElement("td");
         td.appendChild(document.createTextNode(json.feed.entry[i].content.$t));  //value値
         //            li.text = json.feed.entry[i].content.$t;   //テキスト値
         document.getElementById("table").appendChild(tr).appendChild(td);
       }
-      return false;
+      console.log(tableData);
+    return false;
     });
 }
 
