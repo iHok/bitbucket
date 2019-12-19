@@ -26,6 +26,7 @@ const changeSelectLists = (inputValue) => {
 
 const createTable = (sheetValue) => {
   // 値(数値)から値(value値)を取得
+  // https://spreadsheets.google.com/feeds/cells/+ sheetValue +/public/values?alt=json で作り直す
   const str = "https://spreadsheets.google.com/feeds/list/" + sheetValue + "/public/values?alt=json";
   console.log(str);
   const result = document.getElementById("result");
@@ -36,32 +37,59 @@ const createTable = (sheetValue) => {
     .then((json) => {
       //      console.log(Object.keys(json.feed.entry[1].filter(gsx => gsx.test(/gsx/))));
       //      console.log(Object.keys(json.feed.entry[0]).filter(gsx => /gsx\$/.test(gsx)));
-      console.log(json["feed"]["entry"]);
+      //console.log(json.feed["entry"]);
       //.filter(gsx => /gsx\$/.test(gsx))
       //        result.innerHTML = json.feed;        
-      // console.log(myJson.length);
+      console.log(json);
+      console.log("json.feed.entry[0]");
+      //console.log(json.feed.entry[0]);
 
-      let lineKeys = Object.keys(json.feed.entry[0]).filter(gsx => /gsx\$/.test(gsx));
-      let tableData =  (new Array(json.feed.entry[0].length)).fill("").map(() => (new Array(lineKeys.length)).fill(""));;
-      console.log(tableData);
-      for (v of lineKeys) {
-        tableData.push(v[0].replace(/gsx\$/g, ""))
-        //        console.log(json.feed.entry.[v].content.$t)
+      let row = [];//Object.keys(json.feed.entry[0]).filter(gsx => /gsx\$/.test(gsx));
+      for (let i = 0; i < json.feed.entry.length; i++) {
+        for (v of Object.keys(json.feed.entry[i]).filter(gsx => /gsx\$/.test(gsx))) {
+          console.log(i + ":" + v + ":長さ" + Object.keys(json.feed.entry[i]).filter(gsx => /gsx\$/.test(gsx)).length) + ":中身";
+          if (row.indexOf(v) >= 0) {
+            row.splice(row.indexOf(v), 0, v);
+          } else {
+            row[row.length] = v;
+          }
+          
+          //          console.log(v);
+        };
       };
+      console.log("row");
+//      row = row.filter((x, i, self) => self.indexOf(x) === i);
+      console.log(row);
+ 
+      let lineKeys = Object.keys(json.feed.entry[0]).filter(gsx => /gsx\$/.test(gsx));
+      let tableDataTest = (new Array(json.feed.entry.length)).fill("").map(() => (new Array(row.length)).fill(""));
+      console.log(tableDataTest);
+      let tableData = (new Array(json.feed.entry.length)).fill("").map(() => (new Array(row.length)).fill(""));
+      lineKeys.forEach((v, j) => {
+        tableData[0][j] = v.replace(/gsx\$/g, "");
+      });
+//      console.log(lineKeys);
+      console.log(tableData);
+
+
       for (let i = 0; i < json.feed.entry.length; i++) {
         //        table.push();
         //        console.log(json.feed.entry[i]);
-        for (v of lineKeys) {
-//          tableData[i + 1].push("test");        
+        lineKeys.forEach((v, j) => {
+//          tableData[i+1][j] = json.feed.entry[i][v].$t;
+        });
+
+        for (v of Object.keys(json.feed.entry[i]).filter(gsx => /gsx\$/.test(gsx))) {
+//          console.log(i+":"+v+":長さ" + Object.keys(json.feed.entry[i]).filter(gsx => /gsx\$/.test(gsx)).length)+":中身";
         };
-  
+
+
         let tr = document.createElement("tr");
         let td = document.createElement("td");
         td.appendChild(document.createTextNode(json.feed.entry[i].content.$t));  //value値
         //            li.text = json.feed.entry[i].content.$t;   //テキスト値
         document.getElementById("table").appendChild(tr).appendChild(td);
       }
-      console.log(tableData);
     return false;
     });
 }
