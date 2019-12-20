@@ -26,8 +26,7 @@ const changeSelectLists = (inputValue) => {
 
 const createTable = (sheetValue) => {
   // 値(数値)から値(value値)を取得
-  // https://spreadsheets.google.com/feeds/cells/+ sheetValue +/public/values?alt=json で作り直す
-  const str = "https://spreadsheets.google.com/feeds/list/" + sheetValue + "/public/values?alt=json";
+  const str = "https://spreadsheets.google.com/feeds/cells/" + sheetValue + "/public/values?alt=json";
   console.log(str);
   const result = document.getElementById("result");
   document.getElementById("table").innerHTML = '';
@@ -41,47 +40,19 @@ const createTable = (sheetValue) => {
       //.filter(gsx => /gsx\$/.test(gsx))
       //        result.innerHTML = json.feed;        
       console.log(json);
-      console.log("json.feed.entry[0]");
-      //console.log(json.feed.entry[0]);
 
-      let row = [];//Object.keys(json.feed.entry[0]).filter(gsx => /gsx\$/.test(gsx));
+      let tableData = (new Array(Number(json.feed.gs$rowCount.$t))).fill("").map(() => (new Array(Number(json.feed.gs$colCount.$t))).fill(""));
+//      let tableData = [[],[],[],[],[],[]];
       for (let i = 0; i < json.feed.entry.length; i++) {
-        for (v of Object.keys(json.feed.entry[i]).filter(gsx => /gsx\$/.test(gsx))) {
-          console.log(i + ":" + v + ":長さ" + Object.keys(json.feed.entry[i]).filter(gsx => /gsx\$/.test(gsx)).length) + ":中身";
-          if (row.indexOf(v) >= 0) {
-            row.splice(row.indexOf(v), 0, v);
-          } else {
-            row[row.length] = v;
-          }
-          
-          //          console.log(v);
-        };
+//        console.log(json.feed.entry[i].gs$cell.row + ":" + json.feed.entry[i].gs$cell.col + ":" + json.feed.entry[i].gs$cell.$t);
+        tableData[Number(json.feed.entry[i].gs$cell.row - 1)][Number(json.feed.entry[i].gs$cell.col - 1)] = json.feed.entry[i].gs$cell.$t;
       };
-      console.log("row");
-//      row = row.filter((x, i, self) => self.indexOf(x) === i);
-      console.log(row);
- 
-      let lineKeys = Object.keys(json.feed.entry[0]).filter(gsx => /gsx\$/.test(gsx));
-      let tableDataTest = (new Array(json.feed.entry.length)).fill("").map(() => (new Array(row.length)).fill(""));
-      console.log(tableDataTest);
-      let tableData = (new Array(json.feed.entry.length)).fill("").map(() => (new Array(row.length)).fill(""));
-      lineKeys.forEach((v, j) => {
-        tableData[0][j] = v.replace(/gsx\$/g, "");
-      });
-//      console.log(lineKeys);
       console.log(tableData);
-
-
+ 
       for (let i = 0; i < json.feed.entry.length; i++) {
         //        table.push();
         //        console.log(json.feed.entry[i]);
-        lineKeys.forEach((v, j) => {
-//          tableData[i+1][j] = json.feed.entry[i][v].$t;
-        });
 
-        for (v of Object.keys(json.feed.entry[i]).filter(gsx => /gsx\$/.test(gsx))) {
-//          console.log(i+":"+v+":長さ" + Object.keys(json.feed.entry[i]).filter(gsx => /gsx\$/.test(gsx)).length)+":中身";
-        };
 
 
         let tr = document.createElement("tr");
