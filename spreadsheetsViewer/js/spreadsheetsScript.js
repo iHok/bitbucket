@@ -24,29 +24,32 @@ const changeSelectLists = (inputValue) => {
   }
 }
 
+const jsonFeedEntryToTable = (v) => {
+  console.log(v);
+  for (let i = 0; i < v.length; i++) {
+    console.log(v[i])
+    //        console.log(json.feed.entry[i].gs$cell.row + ":" + json.feed.entry[i].gs$cell.col + ":" + json.feed.entry[i].gs$cell.$t);
+//   tableData[Number(json.feed.entry[i].gs$cell.row - 1)][Number(json.feed.entry[i].gs$cell.col - 1)] = json.feed.entry[i].gs$cell.$t;
+  };
+    
+};
+
 const createTable = (sheetValue) => {
   // 値(数値)から値(value値)を取得
   const str = "https://spreadsheets.google.com/feeds/cells/" + sheetValue + "/public/values?alt=json";
   console.log(str);
   const result = document.getElementById("result");
   document.getElementById("table").innerHTML = '';
-
   fetch(str)
     .then((response) => response.json())
     .then((json) => {
       //      console.log(Object.keys(json.feed.entry[1].filter(gsx => gsx.test(/gsx/))));
       //      console.log(Object.keys(json.feed.entry[0]).filter(gsx => /gsx\$/.test(gsx)));
-      //console.log(json.feed["entry"]);
       //.filter(gsx => /gsx\$/.test(gsx))
-      //        result.innerHTML = json.feed;        
-      console.log(json);
+      console.log("json");
+      jsonFeedEntryToTable(json.feed.entry);
 
       let tableData = (new Array(Number(json.feed.gs$rowCount.$t))).fill("").map(() => (new Array(Number(json.feed.gs$colCount.$t))).fill(""));
-//      let tableData = [[],[],[],[],[],[]];
-      for (let i = 0; i < json.feed.entry.length; i++) {
-//        console.log(json.feed.entry[i].gs$cell.row + ":" + json.feed.entry[i].gs$cell.col + ":" + json.feed.entry[i].gs$cell.$t);
-        tableData[Number(json.feed.entry[i].gs$cell.row - 1)][Number(json.feed.entry[i].gs$cell.col - 1)] = json.feed.entry[i].gs$cell.$t;
-      };
       console.log(tableData);
  
       for (let i = 0; i < json.feed.entry.length; i++) {
@@ -61,9 +64,9 @@ const createTable = (sheetValue) => {
         //            li.text = json.feed.entry[i].content.$t;   //テキスト値
         document.getElementById("table").appendChild(tr).appendChild(td);
       }
-    return false;
+
     });
-}
+  }
 
 window.onload = function () {
   changeSelectLists(document.querySelector("#spreadsheetsURL").value);
